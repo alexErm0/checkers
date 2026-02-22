@@ -4,16 +4,20 @@ export function getCaptureMoves(board, game, row, col) {
   const piece = board[row][col];
   if (!piece) return [];
 
-  const dir = piece === "red" ? -1 : 1;
   const cMoves = [];
 
-  const directions = [-1, 1];
+  const directions = [
+    [-1, -1],
+    [-1, 1],
+    [1, -1],
+    [1, 1]
+  ];
 
-  directions.forEach(dc => {
-    const r1 = row + dir;
+  directions.forEach(([dr, dc]) => {
+    const r1 = row + dr;
     const c1 = col + dc;
 
-    const r2 = row + dir * 2;
+    const r2 = row + dr * 2;
     const c2 = col + dc * 2;
 
     if (

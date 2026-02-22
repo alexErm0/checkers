@@ -1,5 +1,3 @@
-import { getCaptureMoves } from "./capture";
-
 export function getPossibleMoves(board, game, row, col) {
   if (!game) return [];
 
@@ -18,20 +16,7 @@ export function getPossibleMoves(board, game, row, col) {
     if (board[r1]?.[c1] === null) {
       moves.push({ row: r1, col: c1 });
     }
-
-    /*if (
-      board[r1]?.[c1] &&
-      board[r1][c1] !== piece &&
-      board[r2]?.[c2] === null
-    ) {
-      moves.push({ row: r2, col: c2 });
-    }*/
   });
-
-  const cMoves = getCaptureMoves(board, game, row, col);
-  cMoves.forEach(capt => {
-    moves.push(capt);
-  })
 
   return moves;
 }

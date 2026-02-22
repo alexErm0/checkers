@@ -21,8 +21,8 @@ export default function Square({
     <div
       onClick={() => handleClick(r, c)}
       style={{
-        width: isSelected || isPossibleMove ? 56 : 60,
-        height: isSelected || isPossibleMove ? 56 : 60,
+        width: isSelected || isPossibleMove || isCaptureMove ? 56 : 60,
+        height: isSelected || isPossibleMove || isCaptureMove ? 56 : 60,
         backgroundColor: (r + c) % 2 === 0 ? "#eee" : "#555",
         border: isCaptureMove 
           ? "3px solid blue"

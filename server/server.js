@@ -56,6 +56,9 @@ io.on("connection", (socket) => {
   socket.on("move", ({ roomId, move }) => {
     const game = games[roomId];
     if (!game) return;
+    if (!move || !move.from || !move.to) {
+      return; // ignore bad request
+    }
 
     const updatedGame = applyMove(game, move, socket.id);
     updatedGame.lastActive = Date.now();

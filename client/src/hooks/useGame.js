@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import socket from "../socket";
 import { handleClick } from "../game/handleClick";
+import { getAllCaptures } from "../game/getAllCaptures";
 
 export default function useGame() {
   const [board, setBoard] = useState([]);
@@ -8,7 +9,10 @@ export default function useGame() {
   const [selected, setSelected] = useState(null);
   const [possibleMoves, setPossibleMoves] = useState([]);
   const [captureMoves, setCaptureMoves] = useState([]);
+  const [forcedCaptures, setForcedCaptures] = useState([]);
   const [game, setGame] = useState(null);
+
+  const currentPlayer = game?.turn;
 
   useEffect(() => {
     socket.on("gameStart", ({ roomId, game }) => {
@@ -28,6 +32,13 @@ export default function useGame() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!board.length || !currentPlayer) return;
+
+    const caps = getAllCaptures(board, currentPlayer);
+    setForcedCaptures(caps);
+  }, [board, currentPlayer]);
+
   const click = (row, col) =>
     handleClick({
       row,
@@ -40,6 +51,7 @@ export default function useGame() {
       setPossibleMoves,
       captureMoves,
       setCaptureMoves,
+      forcedCaptures,
       roomId,
       socketId: socket.id
     });

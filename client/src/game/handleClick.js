@@ -13,24 +13,28 @@ export function handleClick({
   setPossibleMoves,
   captureMoves,
   setCaptureMoves,
+  forcedCaptures,
   roomId,
   socketId
 }) {
   if (!game) return;
 
   const piece = board[row][col];
+  const captures = getCaptureMoves(board, game, row, col);
 
   if (!selected) {
     if (!piece) return;
     if (game.players[piece] !== socketId) return;
     if (game.turn !== piece) return;
-
-    const moves = getPossibleMoves(board, game, row, col);
-    const cMoves = getCaptureMoves(board, game, row, col);
-
+    
     setSelected({ row, col });
-    setPossibleMoves(moves);
-    setCaptureMoves(cMoves);
+    if (forcedCaptures.length > 0) {
+      setCaptureMoves(captures);
+      setPossibleMoves([]);
+    } else {
+      setPossibleMoves(getPossibleMoves(board, game, row, col));
+      setCaptureMoves([]);
+    }
     return;
   }
 
@@ -39,6 +43,19 @@ export function handleClick({
     setPossibleMoves([]);
     setCaptureMoves([]);
     return;
+  }
+
+  
+  if (forcedCaptures.length > 0) {
+    const allowed = forcedCaptures.find(
+      p => p.row === row && p.col === col
+    );
+    console.log(forcedCaptures + ", " + allowed);
+
+    if (!allowed) {
+      alert("You must capture!");
+      return;
+    }
   }
 
   socket.emit("move", {
