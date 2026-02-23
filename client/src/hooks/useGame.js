@@ -67,6 +67,7 @@ export default function useGame() {
     selected,
     possibleMoves,
     captureMoves,
+    forcedCaptures,
     click,
     findMatch,
     socketId: socket.id

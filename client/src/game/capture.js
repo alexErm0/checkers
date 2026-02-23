@@ -26,7 +26,10 @@ export function getCaptureMoves(board, game, row, col) {
       board[r2]?.[c2] === null
     ) {
       cMoves.push({ row: r2, col: c2 });
+      console.log("Capture moves r2c2 = " + r2 + " + " + c2);
+      console.log("Capture moves  = " + cMoves[0].row + " + " + cMoves[0].col);
     }
+    
   });
 
   return cMoves;

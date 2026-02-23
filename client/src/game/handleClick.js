@@ -45,16 +45,17 @@ export function handleClick({
     return;
   }
 
-  
+  // [ {row, col, moves: [{row, col}, {row, col}] }, ... ]
   if (forcedCaptures.length > 0) {
-    const allowed = forcedCaptures.find(
-      p => p.row === row && p.col === col
-    );
-    console.log(forcedCaptures + ", " + allowed);
 
-    if (!allowed) {
-      alert("You must capture!");
-      return;
+    for(const m of forcedCaptures) {
+      for (const mTo of m.moves) {
+        if (!(mTo.row === row && mTo.col === col
+           && m.row === selected.row && m.col === selected.col)) {
+          alert("You must capture!");
+          return;
+        }
+      }
     }
   }
 

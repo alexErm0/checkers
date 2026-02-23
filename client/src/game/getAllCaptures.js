@@ -9,6 +9,11 @@ export function getAllCaptures(board, player) {
         const moves = getCaptureMoves(board, player, r, c);
 
         if (moves.length > 0) {
+          console.log("Row = " + r);
+          console.log("Col = " + c);
+          moves.forEach(i => {
+            console.log("moves = " + moves[0].row + " + " + moves[0].col);
+          })
           captures.push({
             row: r,
             col: c,
