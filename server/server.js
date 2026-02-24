@@ -15,9 +15,6 @@ const io = new Server(server, {
 });
 
 app.use(express.static(path.join(__dirname, "../client/build")));
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/build/index.html"));
-});
 
 setInterval(() => {
   const now = Date.now();
@@ -94,4 +91,8 @@ io.on("connection", (socket) => {
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
   console.log("Server running on port 5000");
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
