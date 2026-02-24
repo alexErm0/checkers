@@ -14,8 +14,6 @@ const io = new Server(server, {
   cors: { origin: "*" }
 });
 
-app.use(express.static(path.join(__dirname, "../client/build")));
-
 setInterval(() => {
   const now = Date.now();
   for (const roomId in games) {
@@ -88,7 +86,9 @@ io.on("connection", (socket) => {
   });
 });
 
-app.get("/*", (req, res) => {
+app.use(express.static(path.join(__dirname, "../client/build")));
+
+app.use((req, res) => {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
