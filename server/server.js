@@ -1,5 +1,6 @@
 const express = require("express");
 const http = require("http");
+const path = require("path");
 const { Server } = require("socket.io");
 const cors = require("cors");
 const { createGame} = require("./game/gameController");
@@ -11,6 +12,12 @@ app.use(cors());
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: { origin: "*" }
+});
+
+const path = require("path");
+app.use(express.static(path.join(__dirname, "../client/build")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
 setInterval(() => {
@@ -85,6 +92,7 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(5000, () => {
+const PORT = process.env.PORT || 5000;
+server.listen(PORT, () => {
   console.log("Server running on port 5000");
 });
